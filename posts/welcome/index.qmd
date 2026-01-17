@@ -98,6 +98,8 @@ With recent advents in Data Science and AI, the `Octree` looks like it will be s
 
 [Octree Querying With Python and Numpy](https://github.com/suryashch/3d_modelling/blob/main/research/optimizing-the-scene/notebooks/octree-querying.ipynb)
 
+[Octree Visualizer](https://suryashch.github.io/octree/)
+
 
 ### Attributions
 
