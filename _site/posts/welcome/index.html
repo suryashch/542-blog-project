@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tristan O’Malley">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="author" content="Suryash Chakravarty">
+<meta name="dcterms.date" content="2026-01-17">
 
-<title>Welcome To My Blog – Journey to the Center of the CNN</title>
+<title>The Octree</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Journey to the Center of the CNN</span>
+    <span class="navbar-title">The Octree</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -115,9 +115,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome To My Blog</h1>
+      <h1 class="title">The Octree</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">Data Science</div>
               </div>
                   </div>
   </div>
@@ -128,14 +128,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tristan O’Malley </p>
+               <p>Suryash Chakravarty </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 9, 2026</p>
+        <p class="date">January 17, 2026</p>
       </div>
     </div>
     
@@ -154,11 +154,164 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<section id="the-octree" class="level1">
+<h1>The Octree</h1>
+<p>How are modern video games able to render vast worlds, with crystal clear graphics? How does YouTube know your watch preferences- often better than you do? And how do engineers model precise airflow over complex wing shapes on a jet? These 3 seemingly unrelated questions are answered with this one common data structure- the <code>Octree</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-cover.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Octree Cover Photo</figcaption>
+</figure>
+</div>
+<p>An <code>Octree</code> is a data structure used for efficient <code>spatial querying</code>. It is created by recursively dividing a 3D space into small cubes, which sit nested within each other. This way, each level of the <code>Octree</code> subdivides the space into 8 cubes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-nested-structure-diagram.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Octree Nested Diagram</figcaption>
+</figure>
+</div>
+<p>Usage of an <code>Octree</code> has been shown to improve Time Complexity from O(n) runtime to O(log n). Fundamentally, this means that increasing the data size by a factor of 100, will only increase the runtime by a factor of log(100) ~= 4.6.</p>
+<p><code>Octrees</code> are used widely in game development, <code>Nearest-Neighbor</code> algorithms, and Finite Element Analysis in CAD. Let’s dive a little deeper into how they work.</p>
+<section id="what-is-an-octree" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-an-octree">What is an Octree</h2>
+<p>An <code>Octree</code> is a special type of <code>k-D</code> Tree where the number of dimensions <code>k</code> = 3. It is constructed by repeatedly subdividing a 3D space into cubes. Each node of the <code>Octree</code> contains 8 children- which refers to the 8 sub-cubes that sit within a larger cube.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-schematic.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Octree Schematic (source: WhiteTimberwolf)</figcaption>
+</figure>
+</div>
+<p>An important consideration here is that <code>octrees</code> do not store any data themselves- they are just used to quickly query data in a space. An <code>Octree</code> is used to answer the question- “Which objects in my scene are physically close to my area of interest”? In Video Games, this may be used for player - object interactions.</p>
+<p>Say our player has walked up to a treasure chest on the map and clicked the <code>A</code> button to open it. Now instead of searching through every treasure chest in the game to determine which one the player clicked on, we use an <code>Octree</code> to discard entire segments of the map and narrow our search down to only the specific segment which the player is closest to; vastly improving the performance.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-game-map-example.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Octree Game map example</figcaption>
+</figure>
+</div>
+<p>Spatial querying can also be used in <code>Nearest Neighbor</code> algorithms, where the goal is to find the <code>N</code> closest data points in a group. Using an <code>Octree</code> (or <code>k-D</code> tree, more generally), will reduce the total number of objects that the algorithm needs to search through- significantly speeding up prediction time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/KNN-algorithm-visual.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>KNN Implementation Example (source: Anthony Baum)</figcaption>
+</figure>
+</div>
+<p>Let’s work through an example that highlights this use case.</p>
+</section>
+<section id="example-finding-the-closest-objects-in-a-search-radius" class="level2">
+<h2 class="anchored" data-anchor-id="example-finding-the-closest-objects-in-a-search-radius">Example: Finding the Closest Objects in a Search Radius</h2>
+<p>In 3D game engines, a common optimization technique is called Level of Detail (<code>LOD</code>) swapping. This process involves rendering objects that are far away from the player in low-resolution, and dynamically changing them to high-res when the player is near. This type of optimization has been shown to <a href="https://github.com/suryashch/LOD-control-with-threeJS/blob/main/reports/3d-model-LOD.md">improve the performance of the scene by roughly 3x</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/first-working-lod-model.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>LOD Control Model</figcaption>
+</figure>
+</div>
+<p>One downside to this technique is that our engine needs to calculate the distance between our player and every object in our scene. For large scenes, this may be impractical, and significantly hinder the performance.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/gameplay-gif.gif" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Gameplay Example (source: Nvidia)</figcaption>
+</figure>
+</div>
+<p>We can use an <code>Octree</code> to speed things up. Since we know the player’s current position in the world, we divide the 3D space into 8 cubes. Now, we measure the distance between our player and each one of these cubes. If the distance between a cube is too large, we can immediately discard all the objects in that entire cube. This method is called <code>pruning</code>, and as can be seen below, removes most of the objects in our scene.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/Octree-splitting-l1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>L1 Octree splitting</figcaption>
+</figure>
+</div>
+<p>If the cube meets our distance criteria, we divide it into a further 8 cubes and run our distance test again. This will eliminate another group of objects from our search set.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-splitting-l2.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>L2 Octree splitting</figcaption>
+</figure>
+</div>
+<p>As we make our way down the levels of the <code>Octree</code>, the number of objects that meet our distance criteria continuously reduce, and eventually we’re left with an extremely small subset of the original data points. Now when we call our <code>LOD</code> swapping function, we only need to calculate the distance between our player and this subset of objects- a significant computational saving.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-main-hi-res.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Octree Recalculation on Movement</figcaption>
+</figure>
+</div>
+<p>I simulated some data to show the effects. <a href="https://github.com/suryashch/3d_modelling/blob/main/research/optimizing-the-scene/notebooks/octree-querying.ipynb">In this example</a>, we simulated a large 3D scene using a Numpy array. To this 3D space we added 2000 objects, as well as a <code>camera location</code>, that would serve as the coordinates of our player. We then generated the <code>Octree</code> search algorithm using recursion, as well as a function to draw the individual boxes. Here are the results.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/octree-numpy-simulation.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Octree Numpy Simulation</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Algorithm</th>
+<th>Total Objects</th>
+<th>Objects Subsetted</th>
+<th>Objects Within Radius</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Naive Search</td>
+<td>1,996</td>
+<td>1,996</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>Octree Search</td>
+<td>1,996</td>
+<td>49</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+<p>In a scene with ~2000 objects, our octree-based algorithm narrows down the search to only 49 items. From these 49, we determined that 22 met our distance criteria. Comparing this with a naive search algorithm, we see that we get the same results, but at a fraction of the computational cost.</p>
+<p>As our player moves around the scene, the <code>octree</code> is recalculated each frame and we can quickly identify which objects are near and far. This enables us to swap the resolution of the object (LOD) in near instantaneous time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/refined-lod-model.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Results of LOD Model</figcaption>
+</figure>
+</div>
+<p><a href="https://suryashch.github.io/octree/">See a lightweight visualization of real time Octree rendering</a>.</p>
+</section>
+<section id="other-use-cases" class="level2">
+<h2 class="anchored" data-anchor-id="other-use-cases">Other Use Cases</h2>
+<p>There are strong parallels between <code>spatial querying</code> data structures and classification algorithms. The <code>K-Nearest Neighbor</code> algorithm makes predictions by comparing new data with examples in the training set that have similar features. This process involves measuring the similarities between our new data and every other data point in the training set.</p>
+<p>Using a <code>k-D</code> tree (where <code>k</code> matches the number of dimensions) to perform the search significantly speeds things up.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/KNN-algorithm-using-octree.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>KNN Algorithm Using Octree Querying</figcaption>
+</figure>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Trees are simple data structures that are omnipresent in computer science applications around the world. Out of these, the <code>Octree</code> is the most popular when working with data in 3 dimensions, due to its easy implementation and powerful results. We are surrounded by 3-dimensional datasets, most notably - Coordinates (X,Y,Z), Color channels (R,G,B), Financial Modelling (Risk, Reward, Sensitivity), Astrophysics (m1, m2, r), and many more.</p>
+<p>With recent advents in Data Science and AI, the <code>Octree</code> looks like it will be sticking around for the long run.</p>
+<section id="links" class="level3">
+<h3 class="anchored" data-anchor-id="links">Links</h3>
+<p><a href="https://github.com/suryashch/LOD-control-with-threeJS/blob/main/reports/3d-model-LOD.md">LOD Control in 3D Models</a>.</p>
+<p><a href="https://github.com/suryashch/3d_modelling/blob/main/research/optimizing-the-scene/notebooks/octree-querying.ipynb">Octree Querying With Python and Numpy</a></p>
+</section>
+<section id="attributions" class="level3">
+<h3 class="anchored" data-anchor-id="attributions">Attributions</h3>
+<p>[1] Octree - WhiteTimberwolf, PNG version: Nü - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=9851485</p>
+<p>[2] KNN Algorithm Example - Anthony Baum, Aug 4, 2023 8https://towardsdatascience.com/example-applications-of-k-nearest-neighbors-e6e47cd73f1f/</p>
+<p>[3] Nvidia Gameplay footage https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExamFmZHcwam40eWtvN2N4aDF5dXBndHc2cnBleGhrcjc0c21haTByNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/M93AaKxnpfiCUZsPnN/giphy.gif</p>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,5 +1,5 @@
 ---
-title: "Journey to the Center of the CNN"
+title: "The Octree"
 listing:
   contents: posts
   sort: "date desc"

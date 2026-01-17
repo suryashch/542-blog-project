@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "Journey to the Center of the CNN"
+  title: "The Octree"
   navbar:
     right:
       - about.qmd
